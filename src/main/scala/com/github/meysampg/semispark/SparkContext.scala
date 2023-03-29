@@ -1,6 +1,6 @@
 package com.github.meysampg.semispark
 
-import com.github.meysampg.semispark.rdd.{ParallelArrayRDD, Task}
+import com.github.meysampg.semispark.rdd.{ParallelArrayRDD, Task, RDD}
 import com.github.meysampg.semispark.scheduler.{LocalScheduler, Scheduler}
 
 import scala.reflect.ClassTag
@@ -15,7 +15,7 @@ class SparkContext(master: String) {
     case _ => throw new UnsupportedOperationException("unsupported scheduler")
   }
 
-  def parallelize[T: ClassTag](seq: Seq[T], numSlices: Int): ParallelArrayRDD[T] =
+  def parallelize[T: ClassTag](seq: Seq[T], numSlices: Int): RDD[T, _] =
     new ParallelArrayRDD[T](this, seq, numSlices)
 
   def runTaskObjects[T: ClassTag](tasks: Seq[Task[T]]): Array[T] = {
