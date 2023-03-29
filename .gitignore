@@ -133,5 +133,6 @@ Sessionx.vim
 tags
 # Persistent undo
 [._]*.un~
-
 # End of https://www.toptal.com/developers/gitignore/api/scala,sbt,intellij+all,vim
+
+*.sc
