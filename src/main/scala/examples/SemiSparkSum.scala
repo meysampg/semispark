@@ -4,7 +4,7 @@ import com.github.meysampg.semispark.SparkContext
 
 object SemiSparkSum {
   def main(args: Array[String]): Unit = {
-    val sparkContext = new SparkContext("local")
+    val sparkContext = new SparkContext("local[4]")
 
     val rdd1 = sparkContext.parallelize(Range(0, 1000), 10)
     val rdd2 = rdd1.map(_ * 2)
