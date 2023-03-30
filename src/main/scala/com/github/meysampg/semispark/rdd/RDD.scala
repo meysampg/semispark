@@ -19,6 +19,8 @@ abstract class RDD[T: ClassTag](@transient sc: SparkContext) {
 
   def filter(p: T => Boolean): RDD[T] = new FilteredRDD[T](this, p)
 
+  def cartesian[U: ClassTag](that: RDD[U]): RDD[(T, U)] = new CartesianRDD[T, U](this, that)
+
   // Actions
   def count(): Long = map(x => 1L).reduce(_ + _)
 

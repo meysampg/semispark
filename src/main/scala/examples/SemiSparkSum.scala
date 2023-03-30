@@ -11,6 +11,7 @@ object SemiSparkSum {
     val rdd2: RDD[Int] = rdd1.map(_ * 2)
     val rdd3: RDD[Int] = rdd1.filter(_ % 2 == 0)
     val cachedRdd3: RDD[Int] = rdd3.cache()
+    val carRdd3: RDD[(Int, Int)] = rdd3.cartesian(rdd3)
     val result: Int = rdd2.reduce(_ + _)
 
     println(result)
@@ -19,5 +20,6 @@ object SemiSparkSum {
     println(cachedRdd3.count())
     println(cachedRdd3.count())
     println(cachedRdd3.count())
+    println(carRdd3.count())
   }
 }
