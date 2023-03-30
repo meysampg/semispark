@@ -12,8 +12,8 @@ class CachedRDD[T: ClassTag](rdd: RDD[T]) extends RDD[T](rdd.sparkContext) {
 
   override var partitions: Array[Partition] = rdd.partitions
 
-  override def iterator(split: Partition): Iterator[T] = {
-    val key = id + "::" + split.toString
+  override def iterator(partition: Partition): Iterator[T] = {
+    val key = id + "::" + partition.toString
     val cache = CachedRdd.cache
     val loading = CachedRdd.loading
     val cachedValue = cache.getIfPresent(key)
@@ -43,7 +43,7 @@ class CachedRDD[T: ClassTag](rdd: RDD[T]) extends RDD[T](rdd.sparkContext) {
       }
 
       // no return has happened, so we have to cache our RDD
-      val toBeCachedValue = rdd.iterator(split).toArray
+      val toBeCachedValue = rdd.iterator(partition).toArray
       cache.put(key, toBeCachedValue)
 
       // signal to others to fetch cached result if they are waiting

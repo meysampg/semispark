@@ -10,7 +10,7 @@ abstract class RDD[T: ClassTag](@transient sc: SparkContext) {
 
   def sparkContext: SparkContext = sc
 
-  def iterator(split: Partition): Iterator[T]
+  def iterator(partition: Partition): Iterator[T]
 
   def cache(): RDD[T] = new CachedRDD(this)
 

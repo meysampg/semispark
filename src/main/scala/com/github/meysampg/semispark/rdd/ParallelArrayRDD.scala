@@ -29,8 +29,8 @@ class ParallelArrayRDD[T: ClassTag]
     slices.indices.map(i => new ParallelArrayPartition(id, i, slices(i))).toArray
   }
 
-  override def iterator(split: Partition): Iterator[T] =
-    split.asInstanceOf[ParallelArrayPartition[T]].iterator()
+  override def iterator(partition: Partition): Iterator[T] =
+    partition.asInstanceOf[ParallelArrayPartition[T]].iterator()
 }
 
 private object ParallelArrayRDD {
