@@ -15,7 +15,7 @@ class SparkContext(master: String) {
     case _ => throw new UnsupportedOperationException("unsupported scheduler")
   }
 
-  def parallelize[T: ClassTag](seq: Seq[T], numSlices: Int): RDD[T, _] =
+  def parallelize[T: ClassTag](seq: Seq[T], numSlices: Int): RDD[T] =
     new ParallelArrayRDD[T](this, seq, numSlices)
 
   def runTaskObjects[T: ClassTag](tasks: Seq[Task[T]]): Array[T] = {

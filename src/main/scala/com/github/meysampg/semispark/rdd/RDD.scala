@@ -5,17 +5,17 @@ import com.github.meysampg.semispark.SparkContext
 import scala.collection.mutable.ArrayBuffer
 import scala.reflect.ClassTag
 
-abstract class RDD[T: ClassTag, Split](@transient sc: SparkContext) {
-  var partitions: Array[Split]
+abstract class RDD[T: ClassTag](@transient sc: SparkContext) {
+  var partitions: Array[Partition]
 
   def sparkContext: SparkContext = sc
 
-  def iterator(split: Split): Iterator[T]
+  def iterator(split: Partition): Iterator[T]
 
   // Transformations
-  def map[U: ClassTag](f: T => U): RDD[U, Split] = new MappedRDD[T, U, Split](this, f)
+  def map[U: ClassTag](f: T => U): RDD[U] = new MappedRDD[T, U](this, f)
 
-  def filter(p: T => Boolean): RDD[T, Split] = new FilteredRDD[T, Split](this, p)
+  def filter(p: T => Boolean): RDD[T] = new FilteredRDD[T](this, p)
 
   // Actions
   def count(): Long = map(x => 1L).reduce(_ + _)

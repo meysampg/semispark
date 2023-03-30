@@ -2,8 +2,11 @@ package com.github.meysampg.semispark.rdd
 
 import scala.reflect.ClassTag
 
-class MappedRDD[T: ClassTag, U: ClassTag, Split](rdd: RDD[T, Split], f: T => U) extends RDD[U, Split](rdd.sparkContext) {
-  override var partitions: Array[Split] = rdd.partitions
+class MappedRDD[T: ClassTag, U: ClassTag](rdd: RDD[T], f: T => U) extends RDD[U](rdd.sparkContext) {
+  override var partitions: Array[Partition] = rdd.partitions
 
-  override def iterator(split: Split): Iterator[U] = rdd.iterator(split).map(f)
+  override def iterator(split: Partition): Iterator[U] = {
+    println("Processing MappedRDD: " + split)
+    rdd.iterator(split).map(f)
+  }
 }
