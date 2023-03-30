@@ -21,6 +21,8 @@ abstract class RDD[T: ClassTag](@transient sc: SparkContext) {
 
   def cartesian[U: ClassTag](that: RDD[U]): RDD[(T, U)] = new CartesianRDD[T, U](this, that)
 
+  def union(that: RDD[T]): RDD[T] = new UnionRDD[T](this, that)
+
   // Actions
   def count(): Long = map(x => 1L).reduce(_ + _)
 
