@@ -12,6 +12,8 @@ abstract class RDD[T: ClassTag](@transient sc: SparkContext) {
 
   def iterator(split: Partition): Iterator[T]
 
+  def cache(): RDD[T] = new CachedRDD(this)
+
   // Transformations
   def map[U: ClassTag](f: T => U): RDD[U] = new MappedRDD[T, U](this, f)
 

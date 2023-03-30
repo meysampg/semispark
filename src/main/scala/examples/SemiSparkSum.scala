@@ -10,10 +10,14 @@ object SemiSparkSum {
     val rdd1: RDD[Int] = sparkContext.parallelize(Range(0, 1000), 10)
     val rdd2: RDD[Int] = rdd1.map(_ * 2)
     val rdd3: RDD[Int] = rdd1.filter(_ % 2 == 0)
+    val cachedRdd3: RDD[Int] = rdd3.cache()
     val result: Int = rdd2.reduce(_ + _)
 
     println(result)
     println(rdd2.count())
     println(rdd3.count())
+    println(cachedRdd3.count())
+    println(cachedRdd3.count())
+    println(cachedRdd3.count())
   }
 }
