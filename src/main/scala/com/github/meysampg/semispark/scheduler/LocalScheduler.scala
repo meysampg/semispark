@@ -10,6 +10,8 @@ class LocalScheduler(threads: Int) extends Scheduler {
 
   override def start(): Unit = {}
 
+  override def numCores(): Int = threads
+
   override def waitForRegister(): Unit = {}
 
   override def runTasks[T: ClassTag](tasks: Array[Task[T]]): Array[T] = {

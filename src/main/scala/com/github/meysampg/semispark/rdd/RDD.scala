@@ -17,7 +17,11 @@ abstract class RDD[T: ClassTag](@transient sc: SparkContext) {
   // Transformations
   def map[U: ClassTag](f: T => U): RDD[U] = new MappedRDD[T, U](this, f)
 
+  def flatMap[U: ClassTag](f: T => Iterator[U]): RDD[U] = new FlatMappedRDD[T, U](this, f)
+
   def filter(p: T => Boolean): RDD[T] = new FilteredRDD[T](this, p)
+
+  def groupBy[K: ClassTag](f: T => K): RDD[(K, Iterator[T])] = new GroupedByRDD(this, f)
 
   def cartesian[U: ClassTag](that: RDD[U]): RDD[(T, U)] = new CartesianRDD[T, U](this, that)
 
@@ -31,6 +35,19 @@ abstract class RDD[T: ClassTag](@transient sc: SparkContext) {
     val results = sc.runTaskObjects(tasks)
 
     Array.concat(results: _*)
+  }
+
+  def take(n: Int): Array[T] = {
+    println(f"Processing take($n)")
+    if (n == 0) Array[T]()
+    else {
+      val buffer = ArrayBuffer[T]()
+      for (partition <- partitions; row <- iterator(partition)) {
+        buffer += row
+        if (buffer.size == n) return buffer.toArray
+      }
+      buffer.toArray
+    }
   }
 
   def reduce(f: (T, T) => T): T = {

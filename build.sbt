@@ -7,8 +7,12 @@ lazy val root = (project in file("."))
     name := "rdd"
   )
 
+val hadoopVersion = "3.3.5"
+val guavaVersion = "31.1-jre"
 
-// https://mvnrepository.com/artifact/org.apache.spark/spark-core
-libraryDependencies += "org.apache.spark" %% "spark-core" % "3.3.1"
 // https://mvnrepository.com/artifact/com.google.guava/guava
-libraryDependencies += "com.google.guava" % "guava" % "31.1-jre"
+libraryDependencies += "com.google.guava" % "guava" % guavaVersion
+// https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-mapreduce-client-core
+libraryDependencies += "org.apache.hadoop" % "hadoop-mapreduce-client-core" % hadoopVersion
+// https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-common
+libraryDependencies += "org.apache.hadoop" % "hadoop-common" % hadoopVersion

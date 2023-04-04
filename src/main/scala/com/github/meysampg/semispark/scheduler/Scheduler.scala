@@ -7,6 +7,8 @@ import scala.reflect.ClassTag
 trait Scheduler {
   def start(): Unit
 
+  def numCores(): Int
+
   def waitForRegister(): Unit
 
   def runTasks[T: ClassTag](tasks: Array[Task[T]]): Array[T]

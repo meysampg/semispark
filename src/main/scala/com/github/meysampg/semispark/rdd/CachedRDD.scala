@@ -1,7 +1,6 @@
 package com.github.meysampg.semispark.rdd
 
 import com.google.common.cache.{Cache, CacheBuilder}
-import com.google.common.collect.MapMaker
 
 import java.util.concurrent.atomic.AtomicLong
 import scala.collection.mutable
