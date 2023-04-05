@@ -3,6 +3,7 @@ package com.github.meysampg.semispark.rdd
 import com.github.meysampg.semispark.SparkContext
 
 import scala.collection.mutable.ArrayBuffer
+import scala.language.implicitConversions
 import scala.reflect.ClassTag
 
 abstract class RDD[T: ClassTag](@transient sc: SparkContext) {
@@ -59,4 +60,9 @@ abstract class RDD[T: ClassTag](@transient sc: SparkContext) {
 
     results.reduceLeft(f)
   }
+}
+
+object RDD {
+  implicit def rddToPairRDD[K: ClassTag, V: ClassTag](rdd: RDD[(K, V)]): PairRDD[K, V] =
+    new PairRDD(rdd)
 }
